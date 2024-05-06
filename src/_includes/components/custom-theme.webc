@@ -1,0 +1,80 @@
+<is-land on:visible>
+  <style>
+    /* Hide without JS */
+    is-land:not(:defined) custom-theme {
+      display: none;
+    }
+  </style>
+  <custom-theme
+    class="theme-switch | cluster mt-xs"
+    style="--cluster-horizontal-alignment: center; --gutter: 0.5rem"
+    aria-labelledby="theme-switcher-label"
+  >
+    <slot></slot>
+
+    <script>
+      class customTheme extends HTMLElement {
+        constructor() {
+          super();
+          this.storageKey = 'theme-preference';
+        }
+
+        connectedCallback() {
+          this.theme = {value: this.getColorPreference()}; // Ensure theme is set based on current preference
+          this.setupEventListeners();
+          this.reflectPreference(); // Immediate reflection
+        }
+
+        setupEventListeners() {
+          const lightThemeToggle = this.querySelector('#light-theme-toggle');
+          const darkThemeToggle = this.querySelector('#dark-theme-toggle');
+
+          lightThemeToggle.addEventListener('click', () => this.onClick('light'));
+          darkThemeToggle.addEventListener('click', () => this.onClick('dark'));
+
+          window
+            .matchMedia('(prefers-color-scheme: dark)')
+            .addEventListener('change', ({matches: isDark}) => {
+              this.theme.value = isDark ? 'dark' : 'light';
+              this.setPreference();
+            });
+        }
+
+        onClick(themeValue) {
+          this.theme.value = themeValue;
+          this.setPreference();
+        }
+
+        getColorPreference() {
+          // Fetch the theme from localStorage or determine based on system preference
+          const storedTheme = localStorage.getItem(this.storageKey);
+          if (storedTheme) {
+            return storedTheme;
+          } else {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+        }
+
+        setPreference() {
+          localStorage.setItem(this.storageKey, this.theme.value); // Save the current theme preference
+          this.reflectPreference();
+        }
+
+        reflectPreference() {
+          document.documentElement.setAttribute('data-theme', this.theme.value); // Apply theme to the document
+          this.querySelector('#light-theme-toggle').setAttribute(
+            'aria-pressed',
+            this.theme.value === 'light'
+          );
+          this.querySelector('#dark-theme-toggle').setAttribute('aria-pressed', this.theme.value === 'dark');
+        }
+      }
+
+      customElements.define('custom-theme', customTheme);
+    </script>
+
+    <template data-island="once" webc:raw>
+      <link rel="stylesheet" href="/assets/components/custom-theme.css" />
+    </template>
+  </custom-theme>
+</is-land>

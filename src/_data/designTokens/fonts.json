@@ -1,0 +1,24 @@
+{
+  "title": "Fonts",
+  "description": "Each array of fonts creates a priority-based order. The first font in the array should be the ideal font, followed by sensible, web-safe fallbacks",
+  "items": [
+    {
+      "name": "Display",
+      "description": "Display font stack for headings and large text.",
+      "value": ["Playfair Display SC", "Redhat"]
+    },
+    {
+      "name": "Base",
+      "description": "Base font stack for body text.",
+      "value": ["Roboto Flex", "Figtree"]
+    },
+    {
+      "name": "Mono",
+      "description": "Monospace font for code and preformatted text.",
+      "value": [
+        "IBM Plex Mono",
+        "RobotoMono"
+      ]
+    }
+  ]
+}

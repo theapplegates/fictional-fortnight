@@ -1,0 +1,52 @@
+{% set assetHash = helpers.random() %}
+
+<!doctype html>
+<html lang="{{ meta.lang }}">
+  <!-- The order of elements in the head follows recommendations by Harry Roberts. learn more here: https://www.youtube.com/watch?v=MHyAOZ45vnU -->
+
+  <head>
+    <!-- 1 charset/viewport -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- 2 title -->
+    <title>
+      {% if discover.title %}
+        {{ discover.title }}
+      {% elif title %}
+        {{ title }}
+      {% else %}
+        {{ meta.siteName }}
+      {% endif %}
+    </title>
+
+    <!-- 3 synchronous js  -->
+    {% include "partials/js-inline.njk" %}
+
+    <!-- 4 schema settings -->
+    {% include "partials/schema.njk" %}
+
+    <!-- 5 CSS  -->
+    {% include "partials/css.njk" %}
+
+    <!-- 6 preloads  -->
+    {% include "partials/preloads.njk" %}
+
+    <!-- 7 JS  -->
+    {% include "partials/js.njk" %}
+
+    <!-- 8 everything else: meta tags, icons, open graph etc.  -->
+    {% include "partials/meta-info.njk" %}
+  </head>
+
+  <body class="{{ layout }}">
+    {% include "partials/header.njk" %}
+
+    <main id="main" class="flow">{{ content | safe }}</main>
+
+    {% include "partials/footer.njk" %}
+
+    <script type="module" src="/assets/components/custom-easteregg.js"></script>
+    <custom-easteregg keyword="amazing"></custom-easteregg>
+  </body>
+</html>

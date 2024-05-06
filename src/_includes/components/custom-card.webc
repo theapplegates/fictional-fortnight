@@ -1,0 +1,15 @@
+<custom-card class="flow no-indicator" webc:root>
+  <slot name="image"></slot>
+  <slot name="headline"></slot>
+  <div class="meta | cluster">
+    <slot name="date"></slot>
+    <slot name="tag"></slot>
+  </div>
+  <slot name="content"></slot>
+  <slot name="footer"></slot>
+  <is-land on:idle>
+    <template data-island="once" webc:raw>
+      <link rel="stylesheet" href="/assets/components/custom-card.css" />
+    </template>
+  </is-land>
+</custom-card>

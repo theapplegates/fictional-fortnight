@@ -1,0 +1,12 @@
+<!-- defered js  -->
+{% if masonry %}
+  <!-- masonry fallback, if true in frontmatter -->
+  <script src="/assets/scripts/masonry.js?{{ assetHash }}" defer></script>
+{% endif %}
+
+{% if meta.navigation.drawerNav %}
+  <!-- menu drawer js, if true in meta -->
+  <script src="/assets/scripts/nav-drawer.js?{{ assetHash }}" defer></script>
+{% endif %}
+
+<!-- WIP. Reference: https://github.com/nhoizey/pack11ty/blob/54c238626f0e53671e3b1e3744add38d4c701e73/src/_includes/js.njk#L7 -->
