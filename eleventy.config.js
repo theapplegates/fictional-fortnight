@@ -9,10 +9,12 @@
  * @param {import("@11ty/eleventy/src/UserConfig")} eleventyConfig -
  * @returns {Object} -
  */
-
+ 
 import yaml from 'js-yaml';
 
 //  config import
+import { eleventyImagePlugin } from '@11ty/eleventy-img';
+import pluginWebc from '@11ty/eleventy-plugin-webc';
 import {getAllPosts, onlyMarkdown, tagList} from './src/_config/collections.js';
 import events from './src/_config/events.js';
 import filters from './src/_config/filters.js';
@@ -20,6 +22,7 @@ import plugins from './src/_config/plugins.js';
 import shortcodes from './src/_config/shortcodes.js';
 
 export default async function (eleventyConfig) {
+  
   // --------------------- layout aliases
   eleventyConfig.addLayoutAlias('base', 'base.njk');
   eleventyConfig.addLayoutAlias('home', 'home.njk');
@@ -42,9 +45,18 @@ export default async function (eleventyConfig) {
   eleventyConfig.addPlugin(plugins.rss);
   eleventyConfig.addPlugin(plugins.syntaxHighlight);
 
-  eleventyConfig.addPlugin(plugins.webc, {
-    components: ['./src/_includes/**/*.webc'],
+  eleventyConfig.addPlugin(pluginWebc, {
+    components: ['./src/_includes/**/*.webc', 'npm:@11ty/eleventy-img/*.webc'],
     useTransform: true
+  });
+
+  eleventyConfig.addPlugin(eleventyImagePlugin, {
+    formats: ["webp", "jpeg"],
+    urlPath: "/img/",
+    defaultAttributes: {
+      loading: "lazy",
+      decoding: "async",
+    },
   });
 
   // ---------------------  bundle

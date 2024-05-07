@@ -3,10 +3,26 @@ title: 'Post with an image '
 description: "Eleventy's own build-time image transformations. Find more info on11ty.dev/docs/plugins/image/ and edit settings in config-folder."
 date: 2022-10-12
 tags: ['image', 'feature']
-image: './src/assets/images/gallery/asturias-1.jpg'
+image: './src/assets/images/gallery/cat.jpg'
 alt: 'A picturesque valley showcasing majestic mountains and lush forests, creating a serene and captivating landscape'
 credit: Lene took this photo.
 ---
+<img webc:is="eleventy-image" src="cat.jpg" alt="photo of my tabby cat" />
+<eleventy-image src="cat.jpg" alt="photo of my tabby cat"></eleventy-image>
+
+<!-- Specify widths: -->
+<img
+	webc:is="eleventy-image"
+	width="100, 200"
+	src="./src/assets/images/gallery/cat.jpg"
+	alt="photo of my tabby cat"
+/>
+<img
+	webc:is="eleventy-image"
+	:width="[100, 200]"
+	src="./src/assets/images/gallery/cat.jpg"
+	alt="photo of my tabby cat"
+/>
 
 This starter uses Eleventy's build-time image transformations.
 
